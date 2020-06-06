@@ -70,10 +70,17 @@ void ParticleFilter::prediction(double delta_t, double std_pos[],
 
    //std::cout<< "Predicting!" << std::endl;
    for(auto &particle: particles){
-       particle.x = particle.x + velocity/yaw_rate*(sin(particle.theta + yaw_rate*delta_t)-sin(particle.theta)) + x_noise(generator);
-       particle.y = particle.y + velocity/yaw_rate*(cos(particle.theta) - cos(particle.theta + yaw_rate*delta_t)) + y_noise(generator);
-       particle.theta = particle.theta + yaw_rate * delta_t + theta_noise(generator);
+       if(fabs(yaw_rate)>0.000001){
+           particle.x = particle.x + velocity/yaw_rate*(sin(particle.theta + yaw_rate*delta_t)-sin(particle.theta)) + x_noise(generator);
+           particle.y = particle.y + velocity/yaw_rate*(cos(particle.theta) - cos(particle.theta + yaw_rate*delta_t)) + y_noise(generator);
+           particle.theta = particle.theta + yaw_rate * delta_t + theta_noise(generator);}
+       else{
+           particle.x = particle.x + velocity * delta_t * cos(particle.theta) + x_noise(generator);
+           particle.y = particle.y + velocity * delta_t * sin(particle.theta) + y_noise(generator);
+           particle.theta = particle.theta + theta_noise(generator);
+       }
    }
+
     //std::cout<< "Finished predicting!" << std::endl;
 
 }

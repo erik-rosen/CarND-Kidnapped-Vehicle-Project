@@ -69,7 +69,7 @@ int main() {
             double sense_y = std::stod(j[1]["sense_y"].get<string>());
             double sense_theta = std::stod(j[1]["sense_theta"].get<string>());
 
-              pf.init(sense_x, sense_y, sense_theta, sigma_pos, 100);
+              pf.init(sense_x, sense_y, sense_theta, sigma_pos, 50);
           } else {
             // Predict the vehicle's next state from previous 
             //   (noiseless control) data.
@@ -127,8 +127,8 @@ int main() {
             weight_sum += particles[i].weight;
           }
 
-          std::cout << "highest w " << highest_weight << std::endl;
-          std::cout << "average w " << weight_sum/num_particles << std::endl;
+          //std::cout << "highest w " << highest_weight << std::endl;
+          //std::cout << "average w " << weight_sum/num_particles << std::endl;
 
           json msgJson;
           msgJson["best_particle_x"] = best_particle.x;
