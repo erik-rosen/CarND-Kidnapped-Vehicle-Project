@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include "helper_functions.h"
+#include "Eigen/Dense"
 
 struct Particle {
   int id;
@@ -43,7 +44,7 @@ class ParticleFilter {
    * @param std[] Array of dimension 3 [standard deviation of x [m], 
    *   standard deviation of y [m], standard deviation of yaw [rad]]
    */
-  void init(double x, double y, double theta, double std[]);
+  void init(double x, double y, double theta, double std[], int num_particles);
 
   /**
    * prediction Predicts the state for the next time step
