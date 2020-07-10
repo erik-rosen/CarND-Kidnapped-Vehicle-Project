@@ -48,15 +48,15 @@ After predicting the state of each particle, we need to compute the weight (prop
 
 `ParticleFilter::updateWeights`  does the following:
 
-* For each particle, computes the observed landmarks' map coordinates given the state of the particle: `observations_m`.
+* For each particle, computes the observed landmarks' map coordinates given the state of the particle `observations_m` using the `Eigen`-library.
 * From the map and the particle state, creates a vector of all map landmarks which are within sensor range of the particle `predicted_obs`.
 * Does a pairwise comparison of the elements in `predicted_obs` and `observations_m` to find the closest located predicted landmark for each observation.   
-* Computes the probability of the observation given the state of the particle by assuming gaussian sensor noise with zero mean.
-* Updates the weight of the particle with the above probability.
+* Computes the probability/fitness of the observation given the state of the particle by assuming gaussian sensor noise with zero mean.
+* Updates the weight of the particle with the above computed probability/fitness.
 
 #### Resampling
 
-Resamples particles with replacement with probability proportional to their weight.
+`ParticleFilter::resample` resamples particles with replacement with probability proportional to their weight using the [Roulette wheel algorithm](http://www.edc.ncl.ac.uk/highlight/rhjanuary2007g02.php/). This effectively estimates the posterior distribution of the state given the measurements and controls.
 
 # Running the Code
 
@@ -136,31 +136,3 @@ The code implemented in `particle_filter.cpp` outputs the following success mess
 ```
 Success! Your particle filter passed!
 ```
-
-# Particle filter implementation
-The directory structure of this repository is as follows:
-
-```
-root
-|   build.sh
-|   clean.sh
-|   CMakeLists.txt
-|   README.md
-|   run.sh
-|   particle_filter.gif
-|
-|___data
-|   |   
-|   |   map_data.txt
-|   
-|   
-|___src
-    |   helper_functions.h
-    |   main.cpp
-    |   map.h
-    |   particle_filter.cpp
-    |   particle_filter.h
-    |   Eigen
-```
-
-The file `particle_filter.cpp` in the `src` directory contains the code which was implemented by me as part of this assignment. 
