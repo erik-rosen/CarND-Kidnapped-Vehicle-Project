@@ -57,11 +57,7 @@ void ParticleFilter::init(double x, double y, double theta, double std[], int nu
 void ParticleFilter::prediction(double delta_t, double std_pos[], 
                                 double velocity, double yaw_rate) {
   /**
-   * Adding measurements to each particle and add random Gaussian noise.
-   * NOTE: When adding noise you may find std::normal_distribution 
-   *   and std::default_random_engine useful.
-   *  http://en.cppreference.com/w/cpp/numeric/random/normal_distribution
-   *  http://www.cplusplus.com/reference/random/default_random_engine/
+   * Updating state of each particle based on control inputs and adding random Gaussian noise.
    */
    std::default_random_engine generator;
    std::normal_distribution<double> x_noise(0,std_pos[0]);

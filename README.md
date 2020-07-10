@@ -33,6 +33,31 @@ root
 
 The file `particle_filter.cpp` in the `src` directory contains the code which was implemented by me as part of this assignment. 
 
+### particle_filter.cpp
+
+Upon each new measurement received by the simulater, the following 
+
+#### Intitialization
+If the measurement received is the first one, the particle filter is initialized using `ParticleFilter::init`. This method generates a specified number of particles, and which are initialized to the initial noisy estimate of x, y, theta with random gaussian noise added to each particle. 
+
+#### Prediction
+The method `ParticleFilter::prediction` updates the state of each particle based on control inputs and adds random Gaussian noise to each particle state.
+
+#### Weight updates
+After predicting the state of each particle, we need to compute the weight (proportional to the probability) of each particle state given the measurement (observation of landmarks). 
+
+`ParticleFilter::updateWeights`  does the following:
+
+* For each particle, computes the observed landmarks' map coordinates given the state of the particle: `observations_m`.
+* From the map and the particle state, creates a vector of all map landmarks which are within sensor range of the particle `predicted_obs`.
+* Does a pairwise comparison of the elements in `predicted_obs` and `observations_m` to find the closest located predicted landmark for each observation.   
+* Computes the probability of the observation given the state of the particle by assuming gaussian sensor noise with zero mean.
+* Updates the weight of the particle with the above probability.
+
+#### Resampling
+
+Resamples particles with replacement with probability proportional to their weight.
+
 # Running the Code
 
 
